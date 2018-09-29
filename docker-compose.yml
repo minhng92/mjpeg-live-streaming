@@ -1,0 +1,13 @@
+version: '2'
+services:
+  mjpeg_server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: mjpeg_server
+    tty: true
+    ports:
+      - "5050:5050"
+    volumes:
+      - ./images:/app/images
+    restart: always             # run as a service
