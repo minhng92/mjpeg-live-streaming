@@ -2,6 +2,7 @@ import time
 import os
 from base_camera import BaseCamera
 
+CURRENT_FOLDER = os.path.dirname(os.path.abspath(__file__))
 
 class Camera(BaseCamera):
     """An emulated camera implementation that streams a repeated sequence of
@@ -9,7 +10,7 @@ class Camera(BaseCamera):
     cam_img_files = {}
     curr_idx = {}
     max_idx = {}
-    default_file = '/app/default.jpg'
+    default_file = os.path.join(CURRENT_FOLDER, 'default.jpg')
     idx_limit = 250
 
     frame_recyler = {}

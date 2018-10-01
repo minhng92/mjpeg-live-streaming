@@ -13,6 +13,7 @@ else:
 # from camera_pi import Camera
 
 app = Flask(__name__)
+CURRENT_FOLDER = os.path.dirname(os.path.abspath(__file__))
 
 __curr_idx = {}
 __camera = Camera
@@ -28,9 +29,8 @@ def gen(camera, cam_id):
 
 @app.route('/cam_info/<cam_id>', methods=['PUT'])
 def update_camera_info(cam_id):
-    
     if request.json and 'file_path' in request.json:
-        file_path = os.path.join('/app/images', request.json['file_path'])
+        file_path = os.path.join(os.path.join(CURRENT_FOLDER, 'images'), request.json['file_path'])
         __idx_limit = request.json.get('limit', 250)
         
         # 180914
@@ -69,7 +69,6 @@ def update_camera_info(cam_id):
 @app.route('/mjpeg/<cam_id>', methods=['GET'])
 def mjpeg(cam_id):
     """Video streaming route. Put this in the src attribute of an img tag."""
-    #print("Get images")
     return Response(gen(__camera, cam_id),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
